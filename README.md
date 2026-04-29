@@ -38,7 +38,6 @@ Things to install:
 ## Language Support
 
 - **Treesitter** (JS, TS, TSX, Python, CSS, Lua, Bash, Markdown)  
-- **vim-ai** (`\c` for AI assistance)  
 - **vim-javascript**  
 - **typescript-vim**  
 - **vim-jsx-typescript**  
