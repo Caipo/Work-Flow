@@ -1,54 +1,53 @@
 # Philosophy
 
-    The only two programs you need is Iterm2 and Firefox. One on each monitor with as little mouse touching as possible.
-
+The only two programs you need are **iTerm2** and **Firefox** — one on each monitor, with as little mouse use as possible.
 
 # CLI Programs
-Things to install 
-    - nvim : Text editor of choice.
-    - eza : Replaces the ls command and makes it a litte nicer. 
-    - zoxide : Fuzzy cd. Must have for any work flow.
-    - duff : Quick way to check your disk usage. 
-    - btop : Nice way to look a resource usage. I use it to make sure my vram dosnt explode.
-    - bat : A nicer alternative to cat. Syntax highligting.
+
+Things to install:
+
+- **nvim** — Text editor of choice.  
+- **eza** — Replaces `ls` and makes directory listings nicer.  
+- **zoxide** — Fuzzy `cd`. A must-have for any workflow.  
+- **duff** — Quick way to check disk usage.  
+- **btop** — Great for monitoring resource usage. I use it to make sure my VRAM doesn’t explode.  
+- **bat** — A nicer alternative to `cat`, with syntax highlighting.  
 
 # Key Bindings
-- Rember to swap esc with caps lock.
-- cmd + ` for iterm2/fire fox swap. Automator script below
-  
-# Claude 
-- Adds a hook to flash a random color when done. Usefull for multi tasking.
-- Hook to run ruff on any file i use or save.
-- Skill to journal what I did on a day by looking at my claude, bash, git ... history and writing a small summary.
-- Skill to check my code without fixing anything. This is what I use if I want to manualy code to understand something better and I dont want an error to slow me down.
-- Skill to act like chatgpt but in terminal to keep my key bindings.
 
-# Nvim 
+- Remember to swap **Esc** with **Caps Lock**.  
+- **Cmd + `** — Switch between iTerm2 and Firefox (Automator script below).  
 
-  Core workflow plugins:
-  - Coc.nvim — LSP, completions (Tab/Enter to navigate/confirm, K for hover)
-  - Telescope — fuzzy finding (\ff files, \fg grep, \fb buffers)
-  - Harpoon2 — quick file marks (Ctrl-m mark, Ctrl-h menu)
-  - NERDTree — file browser (Ctrl-t toggle)
+# Claude
 
-  Language support:
-  - Treesitter (JS/TS/TSX/Python/CSS/Lua/Bash/Markdown)
-  - vim-ai (\c for AI assistance)
-  - vim-javascript, typescript-vim, vim-jsx-typescript, vim-graphql
+- Add a hook to flash a random color when a task is done — useful for multitasking.  
+- Hook to run **ruff** on any file I use or save.  
+- Skill to journal what I did each day by analyzing Claude, Bash, Git, etc. history and writing a short summary.  
+- Skill to review my code without fixing anything. I use this when I want to code manually to understand something better and don’t want errors to slow me down.  
+- Skill to act like ChatGPT inside the terminal so I can keep my key bindings.  
 
-  Notable keybindings:
-  - Leader: \
-  - jh or ` — exit insert mode
-  - Ctrl-s / Ctrl-q — save / save+quit
-  - Space — toggle fold
-  - # / -# — comment/uncomment
+# Neovim
 
-  Settings highlights:
-  - 4-space tabs, color column at 79
-  - Auto-cd to Git root
-  - SSH clipboard via OSC 52 + shared file
-  - vim-airline with serene theme, citruszest colorscheme
+## Core Workflow Plugins
 
+- **coc.nvim** — LSP and completions (`Tab` / `Enter` to navigate and confirm, `K` for hover)  
+- **Telescope** — Fuzzy finding (`\ff` files, `\fg` grep, `\fb` buffers)  
+- **Harpoon2** — Quick file marks (`Ctrl-m` mark, `Ctrl-h` menu)  
+- **NERDTree** — File browser (`Ctrl-t` toggle)  
 
+## Language Support
 
+- **Treesitter** (JS, TS, TSX, Python, CSS, Lua, Bash, Markdown)  
+- **vim-ai** (`\c` for AI assistance)  
+- **vim-javascript**  
+- **typescript-vim**  
+- **vim-jsx-typescript**  
+- **vim-graphql**  
 
+## Notable Keybindings
+
+- **Leader:** `\`  
+- **jh** or **`** — Exit insert mode  
+- **Ctrl-s / Ctrl-q** — Save / Save and quit  
+- **Space** — Toggle fold  
+- **# / -#** — Comment / Uncomment  
