@@ -50,3 +50,7 @@ Things to install:
 - **Ctrl-s / Ctrl-q** — Save / Save and quit  
 - **Space** — Toggle fold  
 - **# / -#** — Comment / Uncomment  
+
+# Input rc
+- Sets the bash terminal to us vim with | for insert and block for command.
+- Keeps ctrl l clear and ctr n and ctrl p as up and down
