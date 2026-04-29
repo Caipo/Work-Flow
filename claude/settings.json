@@ -1,0 +1,75 @@
+{
+  "env": {
+    "EDITOR": "vim",
+    "CLAUDE_AUTOCOMPACT_PCT_OVERIDE": "75",
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_ERROR_REOIRTING": "1",
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(python *)",
+      "Bash(cd *)",
+      "Bash(ls *)",
+      "Bash(grep *)",
+      "Bash(cat *)",
+      "Bash(sleep *)",
+      "Bash(conda *)",
+      "Bash(kill *)",
+      "Bash(conda env:*)",
+      "Bash(grep -r \"import\\\\|from\" /home/amb/Code/AmbVision/src/pymod/*.py 2>/dev/null | head -30)",
+      "Bash(ls -la /home/amb/Code/AmbVision/config/ 2>/dev/null || echo \"No config/ dir at root\"; find /home/amb/Code/AmbVision -name \"*.yaml\" -o -name \"*.yml\" -o -name \"*.weights\" -o -name \"*.pt\" -o -name \"*.pth\" 2>/dev/null | grep -v __pycache__ | grep -v .git)",
+      "Bash(mkdir -p /home/amb/Code/AmbVision/output && conda run -n ambvision python /home/amb/Code/AmbVision/src/pymod/infereX3D3.py -c /home/amb/Code/AmbVision/config/ -v /home/amb/Code/AmbVision/Data/S22W1.mp4 -l /home/amb/Code/AmbVision/output/S22W1.log 2>&1 | head -5)",
+      "Read(//home/amb/miniconda3/envs/**)",
+      "Read(//home/amb/anaconda3/**)",
+      "Read(//opt/conda/**)",
+      "Bash(free -h && nvidia-smi --query-gpu=memory.free,memory.used --format=csv)",
+      "Bash(conda run:*)",
+      "Bash(ffmpeg -i /home/amb/Code/AmbVision/Data/S22W1.mp4 -vf scale=-2:480 -c:v libx264 -preset fast -crf 22 -c:a copy /home/amb/Code/AmbVision/Data/S22W1_480p.mp4 2>&1 | tail -5)",
+      "Bash(nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv)",
+      "Bash(du -sh /home/amb/Code/AmbVision/Data/*.mp4)",
+      "Bash(ffmpeg -i Data/S22W2.mp4 -vf scale=854:480 -c:v libx264 -crf 23 -c:a copy Data/S22W2_480p.mp4)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push *)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "model": "sonnet",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | grep -E '\\.py$' | { read -r f; ruff check --fix \"$f\"; } 2>/dev/null || true",
+            "statusMessage": "Running ruff..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{ c=$(( $(od -An -N1 -tu1 /dev/urandom | tr -d ' ') % 6 + 41 )); printf '\\e[?1049h\\e[%dm\\e[2J\\e[H' \"$c\"; sleep 0.12; printf '\\e[?1049l'; } > /dev/tty"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /home/amb/.claude/statusline-command.sh"
+  },
+  "effortLevel": "medium",
+  "theme": "dark-ansi",
+  "editorMode": "vim"
+}
