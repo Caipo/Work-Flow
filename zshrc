@@ -24,6 +24,28 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'  # Gray text for suggestions
 autoload -Uz colors && colors
 PS1='%{%F{green}%}%n@%m%{%f%}:%{%F{blue}%}%~%{%f%}%# '
 
+
+# Vim mode
+bindkey -v
+export KEYTIMEOUT=1
+bindkey -M viins 'jk' vi-cmd-mode
+
+function zle-keymap-select {
+  if [[ $KEYMAP == vicmd ]]; then
+    echo -ne '\e[2 q'  # block
+  else
+    echo -ne '\e[6 q'  # bar
+  fi
+}
+zle -N zle-keymap-select
+
+function zle-line-init {
+  echo -ne '\e[6 q'  # bar on new line
+}
+zle -N zle-line-init
+
+
+
 # Colors
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
