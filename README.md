@@ -1,56 +1,93 @@
-# Philosophy
+# Flow
 
-The only two programs you need are **iTerm2** and **Firefox** — one on each monitor, with as little mouse use as possible.
+Personal dotfiles and terminal configuration. The goal: two programs, two monitors — **terminal** and **browser** — with as little mouse use as possible.
 
-# CLI Programs
+---
 
-Things to install:
+## Philosophy
 
-- **nvim** — Text editor of choice.  
-- **eza** — Replaces `ls` and makes directory listings nicer.  
-- **zoxide** — Fuzzy `cd`. A must-have for any workflow.  
-- **duff** — Quick way to check disk usage.  
-- **btop** — Great for monitoring resource usage. I use it to make sure my VRAM doesn’t explode.  
-- **bat** — A nicer alternative to `cat`, with syntax highlighting.  
+Every tool here is chosen to keep hands on the keyboard. Navigation is fuzzy, editing is modal, and the shell extends the editor rather than replacing it.
 
-# Key Bindings
+---
 
-- Remember to swap **Esc** with **Caps Lock**.  
-- **Cmd + `** — Switch between iTerm2 and Firefox (Automator script below).  
+## Setup
 
-# Claude
+### CLI Tools
 
-- Add a hook to flash a random color when a task is done — useful for multitasking.  
-- Hook to run **ruff** on any file I use or save.  
-- Skill to journal what I did each day by analyzing Claude, Bash, Git, etc. history and writing a short summary.  
-- Skill to review my code without fixing anything. I use this when I want to code manually to understand something better and don’t want errors to slow me down.  
-- Skill to act like ChatGPT inside the terminal so I can keep my key bindings.  
+| Tool | Purpose |
+|------|---------|
+| `nvim` | Primary editor |
+| `eza` | Better `ls` with color and icons |
+| `zoxide` | Fuzzy `cd` — replaces `cd` entirely after a few days |
+| `bat` / `batcat` | Syntax-highlighted `cat` |
+| `btop` | Resource monitor (GPU/VRAM watch) |
+| `duf` | Disk usage at a glance |
+| `fzf` | Fuzzy finder — powers `vf`, `vg`, and Ctrl-R |
+| `ripgrep` | Fast grep — used by `vg` and Telescope |
 
-# Neovim
+### Shell (zsh)
 
-## Core Workflow Plugins
+Config lives in `zshrc`. Key behaviors:
 
-- **coc.nvim** — LSP and completions (`Tab` / `Enter` to navigate and confirm, `K` for hover)  
-- **Telescope** — Fuzzy finding (`\ff` files, `\fg` grep, `\fb` buffers)  
-- **Harpoon2** — Quick file marks (`Ctrl-m` mark, `Ctrl-h` menu)  
-- **NERDTree** — File browser (`Ctrl-t` toggle)  
+- **vim mode** — `jk` to exit insert, beam cursor in insert / block in normal
+- **Ctrl-R** — fzf history search (re-bound after zsh-vi-mode loads)
+- **`cd`** — automatically runs `ls` after every directory change
+- **`vf`** — open a file picked from fzf in nvim
+- **`vg`** — live ripgrep → fzf → open match in nvim at the exact line
 
-## Language Support
+> **Tip:** Swap **Esc** and **Caps Lock** at the OS level — it's worth it.
 
-- **Treesitter** (JS, TS, TSX, Python, CSS, Lua, Bash, Markdown)  
-- **vim-javascript**  
-- **typescript-vim**  
-- **vim-jsx-typescript**  
-- **vim-graphql**  
+### Neovim
 
-## Notable Keybindings
+Config lives in `init.vim`.
 
-- **Leader:** `\`  
-- **jh** or **`** — Exit insert mode  
-- **Ctrl-s / Ctrl-q** — Save / Save and quit  
-- **Space** — Toggle fold  
-- **# / -#** — Comment / Uncomment  
+#### Plugins
 
-# Input rc
-- Sets the bash terminal to us vim with | for insert and block for command.
-- Keeps ctrl l clear and ctr n and ctrl p as up and down
+| Plugin | Purpose |
+|--------|---------|
+| `coc.nvim` | LSP, completions, hover docs |
+| `telescope.nvim` | Fuzzy file/grep/buffer search |
+| `harpoon` (v2) | Persistent file marks for fast switching |
+| `NERDTree` | File browser |
+| `nvim-treesitter` | Syntax and code structure |
+| `vim-ai` | AI chat inside the editor |
+| `nvim-osc52` | Clipboard over SSH via OSC 52 |
+| `nvim-dap` | Debug adapter protocol |
+| `citruszest.nvim` | Colorscheme |
+
+#### Keybindings
+
+**Leader:** `\`
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `` ` `` / `jh` | Insert | Exit insert mode |
+| `Ctrl-s` | Normal | Save |
+| `Ctrl-q` | Normal | Save and quit |
+| `Space` | Normal | Toggle fold |
+| `Space` | Visual | Create fold |
+| `#` | Visual | Comment lines |
+| `-#` | Visual | Uncomment lines |
+| `K` | Normal | Hover documentation (coc) |
+| `\ff` | Normal | Telescope: find files |
+| `\fg` | Normal | Telescope: live grep |
+| `\fb` | Normal | Telescope: buffers |
+| `\fh` | Normal | Telescope: help tags |
+| `Ctrl-m` | Normal | Harpoon: mark file |
+| `Ctrl-h` | Normal | Harpoon: open menu |
+| `Ctrl-t` | Normal | NERDTree: toggle |
+| `Ctrl-f` | Normal | NERDTree: reveal current file |
+| `\c` | Normal/Visual | vim-ai: open AI chat |
+| `\S` | Normal | Toggle spell check |
+
+---
+
+## Claude Code
+
+Hooks and skills configured for this workflow:
+
+- **Flash hook** — random color notification when a task completes, useful when Claude is running in the background
+- **Ruff hook** — lints Python files automatically on save
+- **`/journal`** — generates a daily work summary from Claude, bash, and git history
+- **`/check`** — reviews code for crashes without fixing anything (for learning sessions)
+- **`/chat`** — ChatGPT-style terminal chat that stays within this keybinding setup
