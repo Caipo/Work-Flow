@@ -20,31 +20,20 @@ source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'  # Gray text for suggestions
 
+# Vim mode
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BEAM
+ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
+source ~/.zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
+# fzf history search (Ctrl+R) — re-bound after zsh-vi-mode loads
+function zvm_after_init() {
+  bindkey '^R' fzf-history-widget
+}
+
 # Prompt
 autoload -Uz colors && colors
 PS1='%{%F{green}%}%n@%m%{%f%}:%{%F{blue}%}%~%{%f%}%# '
-
-
-# Vim mode
-bindkey -v
-export KEYTIMEOUT=1
-bindkey -M viins 'jk' vi-cmd-mode
-
-function zle-keymap-select {
-  if [[ $KEYMAP == vicmd ]]; then
-    echo -ne '\e[2 q'  # block
-  else
-    echo -ne '\e[6 q'  # bar
-  fi
-}
-zle -N zle-keymap-select
-
-function zle-line-init {
-  echo -ne '\e[6 q'  # bar on new line
-}
-zle -N zle-line-init
-
-
 
 # Colors
 if [ -x /usr/bin/dircolors ]; then
@@ -68,6 +57,10 @@ alias dact='conda deactivate'
 
 alias flow="tmux; mlflow server ./mlruns --host 0.0.0.0 --port 8000"
 
+alias hub_up='alembic -c /home/amb/Code/AmbHub/src/alembic.ini upgrade head'
+alias hub_down='alembic -c /home/amb/Code/AmbHub/src/alembic.ini downgrade base'
+alias hub_nuke='py /home/amb/Code/AmbHub/scripts/nuke.py'
+alias hub_clear='py /home/amb/Code/AmbHub/scripts/row_clear.py'
 
 alias cpwd='pwd | xclip -selection clipboard; clear'
 alias cda='cd ~/Code/AmbHub; clear'
@@ -85,20 +78,36 @@ alias cdw='cd ~/Code/Workers'
 alias '?'='sgpt'
 alias cat='batcat --style=plain'
 
-# Makes ls pretty
 alias ls='eza'
 export EZA_COLORS="lp=0"
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
 
+alias vf='nvim $(fzf)'
+vg() {
+  local result=$(rg --color=always --line-number "" 2>/dev/null | \
+    fzf --ansi --delimiter=: \
+        --bind 'change:reload:rg --color=always --line-number {q} . 2>/dev/null || true' \
+        --preview 'batcat --color=always {1} --highlight-line {2}')
+  [ -n "$result" ] && nvim $(echo "$result" | awk -F: '{print $1 " +" $2}')
+}
 
-# Quick way to keep track of my days work
 kpy() { pkill -9 -f "python3 .*${1}"; }
 alias rc='source ~/.zshrc'
 
-# Shows files when ls
 cd() { builtin cd "$@" && ls; }
 
-# Append to a text file so i can keep track of what i did every day
+alias ahub='psql "postgresql://amb:ambhub2025@localhost:5432/ambhub"'
 note() { { printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$*"; cat ~/Documents/daily_notes.txt; } > /tmp/_note_tmp && mv /tmp/_note_tmp ~/Documents/daily_notes.txt; }
 
+export MLFLOW_TRACKING_URI='azureml://eastus2.api.azureml.ms/mlflow/v1.0/subscriptions/b8878dac-7c5f-4353-bb93-09bd079da669/resourceGroups/nick.demetrick-rg/providers/Microsoft.MachineLearningServices/workspaces/Nicks-test'
+export OPENAI_API_KEY="REMOVED_OPENAI_API_KEY"
+export MLFLOW_SERVER_CORS_ALLOWED_ORIGINS='*'
+export MLFLOW_SERVER_ALLOWED_HOSTS='*'
+export MLFLOW_SERVER_DISABLE_SECURITY_MIDDLEWARE=true
+
 eval "$(zoxide init zsh)"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="$HOME/.local/bin:$PATH"
