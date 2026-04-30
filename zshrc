@@ -98,11 +98,9 @@ alias rc='source ~/.zshrc'
 
 cd() { builtin cd "$@" && ls; }
 
-alias ahub='psql "postgresql://amb:ambhub2025@localhost:5432/ambhub"'
+alias ahub='psql "postgresql://amb@localhost:5432/ambhub"'
 note() { { printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$*"; cat ~/Documents/daily_notes.txt; } > /tmp/_note_tmp && mv /tmp/_note_tmp ~/Documents/daily_notes.txt; }
 
-export MLFLOW_TRACKING_URI='azureml://eastus2.api.azureml.ms/mlflow/v1.0/subscriptions/b8878dac-7c5f-4353-bb93-09bd079da669/resourceGroups/nick.demetrick-rg/providers/Microsoft.MachineLearningServices/workspaces/Nicks-test'
-export OPENAI_API_KEY="REMOVED_OPENAI_API_KEY"
 export MLFLOW_SERVER_CORS_ALLOWED_ORIGINS='*'
 export MLFLOW_SERVER_ALLOWED_HOSTS='*'
 export MLFLOW_SERVER_DISABLE_SECURITY_MIDDLEWARE=true
