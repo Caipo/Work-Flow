@@ -31,9 +31,11 @@ Config lives in `zshrc`. Key behaviors:
 
 - **vim mode** — `jk` to exit insert, beam cursor in insert / block in normal
 - **Ctrl-R** — fzf history search (re-bound after zsh-vi-mode loads)
+- **Ctrl-O** — accept autosuggestion and execute immediately
 - **`cd`** — automatically runs `ls` after every directory change
 - **`vf`** — open a file picked from fzf in nvim
 - **`vg`** — live ripgrep → fzf → open match in nvim at the exact line
+- **conda auto-activate** — entering a directory with `conda.yaml` automatically activates the named environment
 
 > **Tip:** Swap **Esc** and **Caps Lock** at the OS level — it's worth it.
 
