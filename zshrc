@@ -67,6 +67,7 @@ alias notebook='jupyter notebook'
 alias gpt='sgpt'
 alias '?'='sgpt'
 alias rc='source ~/.zshrc'
+alias erc='vim ~/.zshrc'
 alias cpwd='pwd | xclip -selection clipboard; clear'
 
 # ── Conda aliases ─────────────────────────────────────────────────────────────
