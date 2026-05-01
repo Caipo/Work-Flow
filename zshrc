@@ -128,8 +128,21 @@ vg() {
 # kill a python process by script name fragment
 kpy() { pkill -9 -f "python3 .*${1}"; }
 
+# -------------------- Note Functions
 # prepend a timestamped note to ~/Documents/daily_notes.txt
-note() { { printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$*"; cat ~/Documents/daily_notes.txt; } > /tmp/_note_tmp && mv /tmp/_note_tmp ~/Documents/daily_notes.txt; }
+alias notes="cat $NOTES_FILE"
+alias enote="vim $NOTES_FILE"
+
+# Functions
+note() {
+    local timestamp
+    timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    
+    # Prepend the new note to the top of the file using a subshell
+    # This avoids manual temp file management and is more robust
+    echo -e "[$timestamp] $*\n$(cat "$NOTES_FILE" 2>/dev/null)" > "$NOTES_FILE"
+}
+
 
 # list directory contents after every cd
 cd() { builtin cd "$@" && ls; }
