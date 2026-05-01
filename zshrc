@@ -151,3 +151,14 @@ cd() { builtin cd "$@" && ls; }
 # ── Tools ─────────────────────────────────────────────────────────────────────
 eval "$(zoxide init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# ------------------ Spelling
+
+spell() {
+  echo "$1" | aspell -a \
+    | sed -n '2s/^[^:]*: *//p' \
+    | tr ',' '\n' \
+    | sed 's/^ *//' \
+    | xargs -n 5 \
+    | column -t
+}
