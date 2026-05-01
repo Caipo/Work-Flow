@@ -1,0 +1,26 @@
+# Global defaults
+Host *
+    ServerAliveInterval 30
+    ServerAliveCountMax 3
+    TCPKeepAlive yes
+
+    # Reuse connections (huge latency win)
+    ControlMaster auto
+    ControlPath ~/.ssh/cm-%r@%h:%p
+    ControlPersist 10m
+
+    # Fast auth, fewer round trips
+    PreferredAuthentications publickey
+    IdentitiesOnly yes
+
+    # Reduce handshake delays
+    GSSAPIAuthentication no
+
+    # Compression: enable only if you're often on slow links
+    Compression no
+
+    # Faster, widely supported cipher set
+    Ciphers aes128-ctr,aes192-ctr,aes256-ctr
+
+    # Avoid known slow DNS lookups on some setups
+    UseRoaming no
