@@ -12,6 +12,12 @@ setopt SHARE_HISTORY        # share history across all open shells
 # ── Completion ────────────────────────────────────────────────────────────────
 autoload -Uz compinit && compinit
 
+# ____ Random Shell prompt color based on machine and user. 
+_host_colors=(red green yellow blue magenta cyan)
+_host_hash=$(echo -n "${USER}@${HOST}" | cksum | awk '{print $1}')
+_host_color=${_host_colors[$(((_host_hash % ${#_host_colors[@]}) + 1))]}
+PS1="%{%F{${_host_color}}%}%n@%m%{%f%}:%{%F{blue}%}%~%{%f%}%# "
+
 # ── Plugins ───────────────────────────────────────────────────────────────────
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
