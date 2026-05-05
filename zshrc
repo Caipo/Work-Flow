@@ -52,8 +52,6 @@ fi
 export PATH="/home/amb/miniconda3/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
-# ── Conda ─────────────────────────────────────────────────────────────────────
-source /home/amb/miniconda3/etc/profile.d/conda.sh
 
 # ── Environment ───────────────────────────────────────────────────────────────
 # MLflow server config — open CORS/hosts for local dev
@@ -81,14 +79,6 @@ alias act='conda activate'
 alias dact='conda deactivate'
 bindkey '^O' autosuggest-execute
 
-# auto-activate conda env from conda.yaml on directory change
-chpwd() {
-  if [[ -f conda.yaml ]]; then
-    local env_name
-    env_name=$(grep -m1 '^name:' conda.yaml | awk '{print $2}')
-    [[ -n "$env_name" && "$CONDA_DEFAULT_ENV" != "$env_name" ]] && conda activate "$env_name"
-  fi
-}
 
 # ── AmbHub aliases ────────────────────────────────────────────────────────────
 alias flow="tmux; mlflow server ./mlruns --host 0.0.0.0 --port 8000"
