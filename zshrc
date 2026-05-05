@@ -149,12 +149,22 @@ eval "$(zoxide init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # ------------------ Spelling
-
 spell() {
-  echo "$1" | aspell -a \
-    | sed -n '2s/^[^:]*: *//p' \
-    | tr ',' '\n' \
-    | sed 's/^ *//' \
-    | xargs -n 5 \
-    | column -t
+  local input="$1"
+  local result
+
+  result=$(echo "$input" | aspell -a | sed -n '2p')
+
+  if [[ "$result" == "*"* ]]; then
+    echo "✅ $input"
+  else
+    echo "❌ $input"
+    echo "$result" \
+      | sed 's/^[^:]*: *//' \
+      | tr ',' '\n' \
+      | sed 's/^ *//' \
+      | xargs -n 5 \
+      | column -t
+  fi
 }
+
