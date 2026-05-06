@@ -54,6 +54,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 
 # ── Environment ───────────────────────────────────────────────────────────────
+export DISPLAY=localhost:0
 # MLflow server config — open CORS/hosts for local dev
 export MLFLOW_SERVER_CORS_ALLOWED_ORIGINS='*'
 export MLFLOW_SERVER_ALLOWED_HOSTS='*'
