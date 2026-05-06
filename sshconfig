@@ -24,3 +24,4 @@ Host *
 
     # Avoid known slow DNS lookups on some setups
     UseRoaming no
+    ForwardX11Trusted yes
