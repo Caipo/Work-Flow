@@ -169,3 +169,5 @@ spell() {
   fi
 }
 
+# clipboard Remote -> Client
+﻿clip() { printf "\033]52;c;$(cat | base64 -w 0)\007"; }
