@@ -149,6 +149,17 @@ cd() { builtin cd "$@" && ls; }
 eval "$(zoxide init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Ls after ever z command
+unalias z 2>/dev/null
+z() {
+    local oldpwd="$PWD"
+
+    __zoxide_z "$@" 2>/dev/null
+
+    [[ "$PWD" != "$oldpwd" ]] && ls
+}
+
+
 # ------------------ Spelling
 spell() {
   local input="$1"
