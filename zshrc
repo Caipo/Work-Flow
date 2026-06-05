@@ -148,6 +148,8 @@ cd() { builtin cd "$@" && ls; }
 # ── Tools ─────────────────────────────────────────────────────────────────────
 eval "$(zoxide init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='fdfind --type f --hidden --follow --exclude .git'
+export FZF_ALT_C_COMMAND='fdfind --type d --hidden --follow --exclude .git'
 
 # Ls after ever z command
 unalias z 2>/dev/null
